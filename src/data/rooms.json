@@ -1,0 +1,148 @@
+[
+  {
+    "id": 1,
+    "number": "101",
+    "type": "Single",
+    "price": 2500,
+    "status": "Available",
+    "image": "https://st2.depositphotos.com/1006832/8357/i/450/depositphotos_83571422-stock-photo-single-room-equipped-table-and.jpg"
+  },
+  {
+    "id": 2,
+    "number": "102",
+    "type": "Single",
+    "price": 2500,
+    "status": "Available",
+    "image": "https://st2.depositphotos.com/1006832/8357/i/450/depositphotos_83571422-stock-photo-single-room-equipped-table-and.jpg"
+  },
+  {
+    "id": 3,
+    "number": "103",
+    "type": "Single",
+    "price": 2500,
+    "status": "Available",
+    "image": "https://st2.depositphotos.com/1006832/8357/i/450/depositphotos_83571422-stock-photo-single-room-equipped-table-and.jpg"
+  },
+  {
+    "id": 4,
+    "number": "104",
+    "type": "Single",
+    "price": 2500,
+    "status": "Available",
+    "image": "https://st2.depositphotos.com/1006832/8357/i/450/depositphotos_83571422-stock-photo-single-room-equipped-table-and.jpg"
+  },
+  {
+    "id": 5,
+    "number": "105",
+    "type": "Single",
+    "price": 2500,
+    "status": "Available",
+    "image": "https://st2.depositphotos.com/1006832/8357/i/450/depositphotos_83571422-stock-photo-single-room-equipped-table-and.jpg"
+  },
+  {
+    "id": 6,
+    "number": "106",
+    "type": "Single",
+    "price": 2500,
+    "status": "Available",
+    "image": "https://st2.depositphotos.com/1006832/8357/i/450/depositphotos_83571422-stock-photo-single-room-equipped-table-and.jpg"
+  },
+
+  {
+    "id": 7,
+    "number": "107",
+    "type": "Double",
+    "price": 5000,
+    "status": "Available",
+    "image": "https://media.istockphoto.com/id/1385185506/photo/side-view-of-luxury-hotel-room-with-two-beds-chair-and-potted-plant.jpg?s=612x612&w=0&k=20&c=sO6nXqY-aFsST-dLFLiP3fzlsDOU-R1hQ-PetQ-_kKI="
+  },
+  {
+    "id": 8,
+    "number": "108",
+    "type": "Double",
+    "price": 5000,
+    "status": "Available",
+    "image": "https://media.istockphoto.com/id/1385185506/photo/side-view-of-luxury-hotel-room-with-two-beds-chair-and-potted-plant.jpg?s=612x612&w=0&k=20&c=sO6nXqY-aFsST-dLFLiP3fzlsDOU-R1hQ-PetQ-_kKI="
+  },
+  {
+    "id": 9,
+    "number": "109",
+    "type": "Double",
+    "price": 5000,
+    "status": "Available",
+    "image": "https://media.istockphoto.com/id/1385185506/photo/side-view-of-luxury-hotel-room-with-two-beds-chair-and-potted-plant.jpg?s=612x612&w=0&k=20&c=sO6nXqY-aFsST-dLFLiP3fzlsDOU-R1hQ-PetQ-_kKI="
+  },
+  {
+    "id": 10,
+    "number": "110",
+    "type": "Double",
+    "price": 5000,
+    "status": "Available",
+    "image": "https://media.istockphoto.com/id/1385185506/photo/side-view-of-luxury-hotel-room-with-two-beds-chair-and-potted-plant.jpg?s=612x612&w=0&k=20&c=sO6nXqY-aFsST-dLFLiP3fzlsDOU-R1hQ-PetQ-_kKI="
+  },
+  {
+    "id": 11,
+    "number": "111",
+    "type": "Double",
+    "price": 5000,
+    "status": "Available",
+    "image": "https://media.istockphoto.com/id/1385185506/photo/side-view-of-luxury-hotel-room-with-two-beds-chair-and-potted-plant.jpg?s=612x612&w=0&k=20&c=sO6nXqY-aFsST-dLFLiP3fzlsDOU-R1hQ-PetQ-_kKI="
+  },
+  {
+    "id": 12,
+    "number": "112",
+    "type": "Double",
+    "price": 5000,
+    "status": "Available",
+    "image": "https://media.istockphoto.com/id/1385185506/photo/side-view-of-luxury-hotel-room-with-two-beds-chair-and-potted-plant.jpg?s=612x612&w=0&k=20&c=sO6nXqY-aFsST-dLFLiP3fzlsDOU-R1hQ-PetQ-_kKI="
+  },
+
+  {
+    "id": 13,
+    "number": "113",
+    "type": "Luxury",
+    "price": 10000,
+    "status": "Available",
+    "image": "https://plus.unsplash.com/premium_photo-1661884238187-1c274b3c3413?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8bHV4dXJ5JTIwaG90ZWwlMjByb29tfGVufDB8fDB8fHww"
+  },
+  {
+    "id": 14,
+    "number": "114",
+    "type": "Luxury",
+    "price": 10000,
+    "status": "Available",
+    "image": "https://plus.unsplash.com/premium_photo-1661884238187-1c274b3c3413?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8bHV4dXJ5JTIwaG90ZWwlMjByb29tfGVufDB8fDB8fHww"
+  },
+  {
+    "id": 15,
+    "number": "115",
+    "type": "Luxury",
+    "price": 10000,
+    "status": "Available",
+    "image": "https://plus.unsplash.com/premium_photo-1661884238187-1c274b3c3413?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8bHV4dXJ5JTIwaG90ZWwlMjByb29tfGVufDB8fDB8fHww"
+  },
+  {
+    "id": 16,
+    "number": "116",
+    "type": "Luxury",
+    "price": 10000,
+    "status": "Available",
+    "image": "https://plus.unsplash.com/premium_photo-1661884238187-1c274b3c3413?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8bHV4dXJ5JTIwaG90ZWwlMjByb29tfGVufDB8fDB8fHww"
+  },
+  {
+    "id": 17,
+    "number": "117",
+    "type": "Luxury",
+    "price": 10000,
+    "status": "Available",
+    "image": "https://plus.unsplash.com/premium_photo-1661884238187-1c274b3c3413?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8bHV4dXJ5JTIwaG90ZWwlMjByb29tfGVufDB8fDB8fHww"
+  },
+  {
+    "id": 18,
+    "number": "118",
+    "type": "Luxury",
+    "price": 10000,
+    "status": "Available",
+    "image": "https://plus.unsplash.com/premium_photo-1661884238187-1c274b3c3413?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8bHV4dXJ5JTIwaG90ZWwlMjByb29tfGVufDB8fDB8fHww"
+  }
+]
