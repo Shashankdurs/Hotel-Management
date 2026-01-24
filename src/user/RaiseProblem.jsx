@@ -2,12 +2,15 @@
 import React, { useContext, useState } from 'react'
 import { AuthContext } from '../contexts/AuthContext'
 import { ProblemsContext } from './ProblemsContext'
+import { DataContext } from '../contexts/DataContext'
 import toast from 'react-hot-toast'
 import './../styles/UserDashboard.css'
 
 export default function RaiseProblem() {
   const { user } = useContext(AuthContext)
   const { addProblem } = useContext(ProblemsContext)
+  const { rooms } = useContext(DataContext) // ✅ get rooms
+
   const userName = user?.name || user?.email || 'Guest'
   const userEmail = user?.email || ''
 
@@ -61,26 +64,22 @@ export default function RaiseProblem() {
       if (!res.ok) throw new Error()
 
       const saved = await res.json().catch(() => null)
-      // Persist to local storage so Admin dashboard (which reads localStorage)
-      // can immediately display the new problem.
-      try {
-        const p = saved || {
-          userName,
-          userEmail,
-          title,
-          description,
-          roomNumber,
-          roomIssues,
-          category,
-          priority,
-          foodQuality,
-          status: 'Open',
-          createdAt: new Date().toLocaleString(),
-        }
-        addProblem(p)
-      } catch (e) {
-        // ignore
+
+      const problem = saved || {
+        userName,
+        userEmail,
+        title,
+        description,
+        roomNumber,
+        roomIssues,
+        category,
+        priority,
+        foodQuality,
+        status: 'Open',
+        createdAt: new Date().toLocaleString(),
       }
+
+      addProblem(problem)
 
       toast.success('Problem submitted successfully')
       resetForm()
@@ -94,11 +93,11 @@ export default function RaiseProblem() {
 
   return (
     <div className="min-h-screen w-full flex items-center justify-center px-4 bg-slate-100 dark:bg-slate-900">
-      {/* FORM CARD */}
       <div className="ud-card w-full max-w-3xl shadow-xl">
         <h3 className="ud-title">Raise a Problem</h3>
 
         <form onSubmit={handleSubmit} className="ud-form">
+          {/* TITLE */}
           <label>
             Title <span className="ud-required">*</span>
             <input
@@ -108,6 +107,7 @@ export default function RaiseProblem() {
             />
           </label>
 
+          {/* DESCRIPTION */}
           <label>
             Description <span className="ud-required">*</span>
             <textarea
@@ -117,16 +117,24 @@ export default function RaiseProblem() {
             />
           </label>
 
+          {/* ROOM NUMBER (SELECT) */}
           <label>
             Room Number <span className="ud-required">*</span>
-            <input
-              className="ud-input"
-              placeholder="e.g. 101"
+            <select
+              className="ud-select"
               value={roomNumber}
               onChange={e => setRoomNumber(e.target.value)}
-            />
+            >
+              <option value="">Select Room</option>
+              {rooms.map(room => (
+                <option key={room.id} value={room.number}>
+                  Room {room.number} ({room.type})
+                </option>
+              ))}
+            </select>
           </label>
 
+          {/* ROOM ISSUES */}
           <label>
             Room Issues <span className="ud-required">*</span>
             <textarea
@@ -137,6 +145,7 @@ export default function RaiseProblem() {
             />
           </label>
 
+          {/* CATEGORY + PRIORITY */}
           <div className="ud-row">
             <label>
               Category
@@ -165,6 +174,7 @@ export default function RaiseProblem() {
             </label>
           </div>
 
+          {/* FOOD QUALITY */}
           <label>
             Food Quality
             <select
@@ -179,6 +189,7 @@ export default function RaiseProblem() {
             </select>
           </label>
 
+          {/* SUBMIT */}
           <div className="ud-actions">
             <button className="ud-btn" disabled={submitting}>
               {submitting ? 'Submitting...' : 'Submit'}

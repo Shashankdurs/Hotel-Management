@@ -48,3 +48,16 @@ router.get('/bookings', async (req, res) => {
 })
 
 module.exports = router
+
+// DELETE BOOKING
+router.delete('/bookings/:id', async (req, res) => {
+  try {
+    const deleted = await Booking.findByIdAndDelete(req.params.id);
+    if (!deleted) {
+      return res.status(404).json({ success: false, message: 'Booking not found' });
+    }
+    res.json({ success: true, message: 'Booking deleted' });
+  } catch (err) {
+    res.status(500).json({ success: false, message: 'Failed to delete booking' });
+  }
+});

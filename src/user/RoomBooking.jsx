@@ -6,8 +6,7 @@ import toast from 'react-hot-toast'
 
 export default function RoomBooking() {
   const { user } = useContext(AuthContext)
-
-  const { rooms, addBooking } = useContext(DataContext)
+  const { rooms, addBooking, updateRoomStatus } = useContext(DataContext)
 
   const userName = user?.name || ''
   const userEmail = user?.email || ''
@@ -25,17 +24,16 @@ export default function RoomBooking() {
     customer.email.trim()
 
   /* ================= BOOKING STATES ================= */
-  // rooms are provided by DataContext
   const [checkIn, setCheckIn] = useState('')
   const [checkOut, setCheckOut] = useState('')
   const [guests, setGuests] = useState(1)
   const [search, setSearch] = useState('')
   const [bookingRoomId, setBookingRoomId] = useState(null)
 
-  /* Rooms are loaded from DataContext (local JSON / seeded data) */
-
   /* ================= BOOK ROOM ================= */
   async function handleBookRoom(room) {
+    if (room.status === 'Occupied') return
+
     if (!customerValid) {
       toast.error('Please fill customer details first')
       return
@@ -49,12 +47,12 @@ export default function RoomBooking() {
     const inDate = new Date(checkIn)
     const outDate = new Date(checkOut)
 
-    if (outDate < inDate) {
+    if (outDate <= inDate) {
       toast.error('Check-out must be after check-in')
       return
     }
 
-    setBookingRoomId(room._id)
+    setBookingRoomId(room.id)
 
     const nights = Math.max(
       1,
@@ -63,11 +61,11 @@ export default function RoomBooking() {
     const total = (room.price || 0) * nights
 
     try {
-      const res = await fetch('http://localhost:5000/api/bookings', {
+      await fetch('http://localhost:5000/api/bookings', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          roomId: room._id,
+          roomId: room.id,
           checkIn,
           checkOut,
           guests,
@@ -79,11 +77,8 @@ export default function RoomBooking() {
         }),
       })
 
-      if (!res.ok) throw new Error()
-
-      // add to frontend state so admin views reflect booking
       addBooking({
-        roomId: room._id || room.id,
+        roomId: room.id,
         checkIn,
         checkOut,
         guests,
@@ -93,6 +88,9 @@ export default function RoomBooking() {
         guestPhone: customer.phone,
         guestEmail: customer.email,
       })
+
+      // 🔴 IMPORTANT: mark room as Occupied
+      updateRoomStatus(room.id, 'Occupied')
 
       toast.success(`Room ${room.number} booked successfully`)
     } catch {
@@ -107,7 +105,6 @@ export default function RoomBooking() {
     const type = (r.type || '').toLowerCase()
     const number = String(r.number || '').toLowerCase()
     const q = search.toLowerCase()
-
     return !q || type.includes(q) || number.includes(q)
   })
 
@@ -119,32 +116,41 @@ export default function RoomBooking() {
 
         {/* SEARCH + DATES */}
         <div className="rounded-2xl bg-slate-900 text-white p-4 shadow">
-          <div className="flex flex-wrap gap-3">
-            <input
-              placeholder="Search room"
-              className="ud-input !bg-slate-950 !text-white"
-              value={search}
-              onChange={e => setSearch(e.target.value)}
-            />
-
-            <input
-              type="date"
-              className="ud-input !bg-slate-950 !text-white"
-              value={checkIn}
-              onChange={e => setCheckIn(e.target.value)}
-            />
-
-            <input
-              type="date"
-              className="ud-input !bg-slate-950 !text-white"
-              value={checkOut}
-              onChange={e => setCheckOut(e.target.value)}
-            />
+          <div className="flex flex-wrap gap-4 items-end">
 
             <div className="flex flex-col">
-              <label htmlFor="guests-input" className="text-xs text-slate-300">Guests</label>
+              <label className="text-xs text-slate-300 mb-1">Search Room</label>
               <input
-                id="guests-input"
+                placeholder="Room number / type"
+                className="ud-input !bg-slate-950 !text-white"
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+              />
+            </div>
+
+            <div className="flex flex-col">
+              <label className="text-xs text-slate-300 mb-1">Check-in Date</label>
+              <input
+                type="date"
+                className="ud-input !bg-slate-950 !text-white"
+                value={checkIn}
+                onChange={e => setCheckIn(e.target.value)}
+              />
+            </div>
+
+            <div className="flex flex-col">
+              <label className="text-xs text-slate-300 mb-1">Check-out Date</label>
+              <input
+                type="date"
+                className="ud-input !bg-slate-950 !text-white"
+                value={checkOut}
+                onChange={e => setCheckOut(e.target.value)}
+              />
+            </div>
+
+            <div className="flex flex-col">
+              <label className="text-xs text-slate-300 mb-1">Guests</label>
+              <input
                 type="number"
                 min="1"
                 className="ud-input !bg-slate-950 !text-white w-24"
@@ -152,6 +158,7 @@ export default function RoomBooking() {
                 onChange={e => setGuests(Number(e.target.value))}
               />
             </div>
+
           </div>
         </div>
 
@@ -159,31 +166,52 @@ export default function RoomBooking() {
         <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
           {visibleRooms.map(room => (
             <div
-              key={room._id}
+              key={room.id}
               className="rounded-2xl bg-white shadow ring-1 ring-slate-200 overflow-hidden"
             >
               <img
                 src={room.image}
-                alt=""
+                alt="Room"
                 className="h-36 w-full object-cover"
               />
 
-              <div className="ud-input !bg-slate-950 !text-white w-24">
-                <div className="font-semibold">
-                  Room {room.number} ({room.type})
+              <div className="p-3">
+                <div className="flex justify-between items-center">
+                  <div className="font-semibold text-slate-800">
+                    Room {room.number} ({room.type})
+                  </div>
+
+                  {room.status === 'Occupied' && (
+                    <span className="text-[11px] px-2 py-0.5 rounded-full bg-rose-100 text-rose-700">
+                      Booked
+                    </span>
+                  )}
                 </div>
 
-                <div className="text-emerald-600 font-bold">
+                <div className="text-emerald-600 font-bold mt-1">
                   ₹ {room.price?.toLocaleString()}
                 </div>
 
                 <button
                   onClick={() => handleBookRoom(room)}
-                  disabled={!customerValid || bookingRoomId === room._id}
-                  className="mt-2 w-full rounded-full bg-sky-500 text-white text-xs py-1.5
-                             disabled:bg-slate-300 disabled:cursor-not-allowed"
+                  disabled={
+                    !customerValid ||
+                    bookingRoomId === room.id ||
+                    room.status === 'Occupied'
+                  }
+                  className={`mt-3 w-full rounded-full text-xs py-2 transition
+                    ${
+                      room.status === 'Occupied'
+                        ? 'bg-slate-300 text-slate-500 cursor-not-allowed'
+                        : 'bg-sky-500 text-white hover:bg-sky-400'
+                    }
+                  `}
                 >
-                  {bookingRoomId === room._id ? 'Booking...' : 'Book Room'}
+                  {room.status === 'Occupied'
+                    ? 'Booked'
+                    : bookingRoomId === room.id
+                    ? 'Booking...'
+                    : 'Book Room'}
                 </button>
               </div>
             </div>

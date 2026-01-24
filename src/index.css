@@ -1,4 +1,4 @@
-@tailwind base;
+/* @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -20,4 +20,29 @@ body {
 .container {
   max-width: 1200px;
 }
+ */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
+/* RESET */
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* FORCE BACKGROUND ON ROOT */
+#root {
+  background-color: #749ea5;
+  color: #242424;
+}
+
+/* DARK MODE */
+.dark #root {
+  background-color: #011425;
+  color: #e9dfdf;
+}
