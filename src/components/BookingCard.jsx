@@ -28,7 +28,7 @@ export default function BookingCard({ b, customer, room }) {
         {/* RIGHT */}
         <div className="text-right">
           <div className="text-xs text-slate-400">
-            {/* {b.checkIn} → {b.checkOut} */}
+            {b.checkIn} → {b.checkOut}
           </div>
 
           {b.status && (
